@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <div>d</div>
    
   </div>
 </template>
@@ -18,9 +19,15 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+@fColor:#2d8cf0;
 h1,
 h2 {
   font-weight: normal;
+  color: @fColor;
+  
+}
+div{
+  color: @fColor
 }
 ul {
   list-style-type: none;
