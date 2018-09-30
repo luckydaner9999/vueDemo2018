@@ -1,0 +1,13 @@
+<template>
+    <div>
+       <head-top></head-top>
+    </div>
+</template>
+<script>
+import headTop from '@/components/headTop.vue';
+export default {
+    components:{
+       'head-top': headTop
+    }
+}
+</script>
