@@ -1,22 +1,33 @@
-<style lang="less" scoped>
-@priCo:#555555;
-.cusCo{
- color: @priCo+#111111;
-}
-</style>
 
 <template>
     <div>
-        <head-top></head-top>
-       
+       <div class="registor">
+           <!-- <div class="title">
+               <span>{{logo}}</span><span>用户注册</span>
+           </div> -->
+       </div>
     </div>
 </template>
 <script>
-import headTop from '@/components/headTop.vue';
+import headTop from "@/components/headTop.vue";
+
 export default {
-    components:{
-       'head-top': headTop
-    }
-}
+  data() {
+    return {
+      logo: "logo"
+    };
+  },
+  components: {
+    "head-top": headTop
+  }
+};
 </script>
+<style lang="less" scoped>
+@import "~@/assets/styles/variables.less";
+.bg {
+  background: @bgColor;
+  color: @baseColor;
+}
+</style>
+
 
