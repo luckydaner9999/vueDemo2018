@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Registor from '../views/registor'
+import FormItem from '../views/components/formitem.vue'
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/web/registor',
       name: 'registor',
       component: Registor
+    },
+    {
+      path: '/form',
+      name: 'form',
+      component: FormItem
     }
   ]
 })

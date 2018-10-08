@@ -2,9 +2,10 @@
 <template>
     <div>
        <div class="registor">
+         <!-- <Button @click="toggleTheme">切换主题</Button> -->
          <div class="cont">
-           <Tabs value="name1">
-               <TabPane label="注册" name="name1">
+           <Tabs value="registor">
+               <TabPane label="注册" name="registor">
                   <Form ref="formInline" :model="formInline" :rules="ruleInline">
                     <FormItem prop="user">
                         <Input type="text" v-model="formInline.user" placeholder="请输入用户名">
@@ -26,7 +27,7 @@
                     </FormItem>
                   </Form>
                </TabPane>
-               <TabPane label="登录" name="name2">
+               <TabPane label="登录" name="login">
                  <Form ref="formInline" :model="formInline" :rules="ruleInline">
                     <FormItem prop="user">
                         <Input type="text" v-model="formInline.user" placeholder="请输入用户名">
@@ -39,7 +40,7 @@
                         </Input>
                     </FormItem>
                     <FormItem style="text-align:center">
-                        <Button type="primary" @click="handleSubmit('formInline')" >登录</Button>
+                        <Button type="primary" @click="handleSubmit('formInline')">登录</Button>
                     </FormItem>
                   </Form>
                </TabPane>
@@ -71,6 +72,11 @@ export default {
         ]
       }
     };
+  },
+  methods:{
+toggleTheme(){
+  alert('切换主题');
+}
   },
   components: {
     "head-top": headTop
