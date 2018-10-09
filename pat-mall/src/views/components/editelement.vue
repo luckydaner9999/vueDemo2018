@@ -1,0 +1,235 @@
+<template>
+    <div class="element">
+        <!-- 修改标题 -->
+                  <div class="itemTitle" :class="item.required ? 'xing' : ''">
+                    <input type="text" v-model="item.label">
+                     <Select v-model="item.type" size="small" class="selSty" v-if="item.type==='radio' || item.type==='checkbox' || item.type==='dropdown'">
+                     <Option  value="radio" key="radio">单选</Option>
+                     <Option  value="checkbox" key="checkbox">多选</Option>
+                     <Option  value="dropdown" key="dropdown">下拉</Option>
+                 </Select>
+                  </div>
+                <div v-if="item.type==='radio' || item.type==='checkbox' || item.type==='dropdown'">
+                  
+                  <div v-for="(childItem,k) in item.items" :key="k" class="childItem">
+                      <Icon type="ios-radio-button-off" v-if="item.type==='radio'"/>
+                      <span v-if="item.type==='checkbox'" class="checkboxIcon"></span>
+                      <span v-if="item.type==='dropdown'">{{k+1}}.</span>
+                      <span v-if="childItem.isOther" class="others"><span>其他</span><span></span></span>
+                      <input v-else type="text" v-model="childItem.text" >
+                      <Tooltip content="移除" placement="top">
+                         <i class="ivu-icon ivu-icon-md-remove-circle" @click="deleteChild(item,k)"></i>
+                     </Tooltip>
+                      
+                  </div>
+                   <Button type="text" @click="addDatas(item)"> <Icon type="md-add" />添加选项</Button>
+                   <Button type="text" @click="addDatas(item,'other')" v-show="other"> <Icon type="md-add" />添加其他</Button>
+                </div>
+                <div v-if="item.type==='text'">
+                    <Input :type="item.isMultiline ? 'textarea' : 'text'"  style="width: 200px;background-color: #ffffff;margin-left:10px" disabled :placeholder="item.isNumber ? '123' : ''"></Input>
+                </div>
+               
+                <div class="elOpt">
+                   <Checkbox v-model="item.required">必填</Checkbox>                 
+                   <Checkbox v-model="item.isHidden">隐藏</Checkbox>
+                   <Checkbox v-model="item.isNumber">数字</Checkbox>
+                   <Checkbox v-model="item.isMultiline">多行</Checkbox>
+                   <span @click="showAction">
+                        <Tooltip content="更多设置" placement="top">
+                         <i class="ivu-icon ivu-icon-ios-more"></i>
+                     </Tooltip>
+                   </span>
+                   <div class="actionsheet" v-show="isShow">
+                       <Checkbox v-model="item.displayDescription" @on-change="isAddDes">添加提示信息</Checkbox>                 
+                   </div>
+
+                  <span class="op">
+                       <span @click="deleteEle(item)">
+                        <Icon type="ios-trash" />
+                   </span>
+                   <span @click="copyEl(item)">
+                       <Icon type="md-copy" />
+                   </span>
+                  </span>
+
+                </div>
+    </div>
+</template>
+<script>
+export default {
+  props: ["item"],
+  data() {
+    return {
+      other: true,
+      isShow: false
+    };
+  },
+  methods: {
+    deleteEle(obj) {
+      this.$emit("delete", obj);
+    },
+    copyEl(obj) {
+      this.$emit("copy", obj);
+    },
+    showAction() {
+      this.isShow = !this.isShow;
+    },
+    isAddDes() {
+      this.isShow = false;
+    },
+    // 添加选项
+    addDatas(obj, isOther) {
+      if (isOther) {
+        obj.items.push({
+          isOther: true,
+          text: "其他",
+          _id: this.getRandomId()
+        });
+        this.other = false;
+      } else {
+        obj.items.push({
+          isOther: false,
+          text: "选项" + (obj.items.length + 1),
+          _id: this.getRandomId()
+        });
+      }
+    },
+    // 删除当前选项
+    deleteChild(obj, k) {
+      obj.items = obj.items.filter((val, index) => index !== k);
+      this.judgeHasOther(obj.items);
+    },
+    // 获取随机id
+    getRandomId() {
+      return new Date()
+        .getTime()
+        .toString(32)
+        .toUpperCase();
+    }
+  }
+};
+</script>
+
+<style lang="less" scoped>
+.itemTitle {
+  font-size: 16px;
+  color: #333333;
+  padding: 10px 10px 0 10px;
+  position: relative;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+.itemTitle.xing::before {
+  content: "*";
+  color: #f65;
+  position: absolute;
+  top: 18px;
+  left: 0;
+}
+.itemTitle input {
+  width: 500px;
+  border: none;
+  outline: none;
+  padding: 5px;
+}
+.checkboxIcon {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: solid 1px #d2d2d2;
+}
+.element {
+  border-radius: 3px;
+  background: #ffffff;
+  cursor: pointer;
+  margin: 10px;
+  box-sizing: border-box;
+  font-size: 14px;
+  border: solid 2px #f65;
+}
+
+.element .selSty {
+  width: 100px;
+  float: right;
+}
+.childItem input {
+  border: none;
+  width: 300px;
+  outline: none;
+  margin-left: 5px;
+  padding: 5px;
+}
+.element input:focus {
+  border: none;
+}
+.childItem:hover input,
+.itemTitle:hover input {
+  border-bottom: solid 1px #d2d2d2;
+}
+.childItem:hover .ivu-icon.ivu-icon-md-remove-circle {
+  display: inline-block;
+}
+
+.element .ivu-icon.ivu-icon-md-remove-circle,
+a,
+.element .ivu-btn-text {
+  color: #f65;
+}
+.element .ivu-icon.ivu-icon-md-remove-circle {
+  display: none;
+}
+
+.childItem {
+  margin-bottom: 10px;
+  padding-left: 10px;
+}
+.elOpt {
+  height: 40px;
+  background: #f2f2f2;
+  margin-top: 10px;
+  padding-left: 10px;
+  line-height: 40px;
+  padding-right: 10px;
+  position: relative;
+}
+.elOpt .actionsheet {
+  width: 200px;
+  background: #ffffff;
+  box-shadow: 2px 2px 2px #d2d2d2;
+  padding: 5px;
+  position: absolute;
+  left: 150px;
+  top: 30px;
+}
+.elOpt > span.op {
+  display: inline-block;
+  line-height: 40px;
+  padding: 0;
+  float: right;
+}
+.elOpt > span {
+  padding: 5px;
+}
+.elOpt .ivu-icon {
+  font-size: 18px;
+}
+.others {
+  padding-left: 10px;
+  height: 40px;
+  display: inline-block;
+  line-height: 40px;
+  position: relative;
+  width: 300px;
+}
+
+.others span:last-child {
+  position: absolute;
+  display: inline-block;
+  width: 100px;
+  height: 30px;
+  border: solid 1px #d2d2d2;
+  top: 5px;
+  left: 50px;
+}
+</style>
+
