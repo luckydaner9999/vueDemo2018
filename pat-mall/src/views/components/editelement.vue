@@ -7,7 +7,10 @@
                      <Option  value="radio" key="radio">单选</Option>
                      <Option  value="checkbox" key="checkbox">多选</Option>
                      <Option  value="dropdown" key="dropdown">下拉</Option>
-                 </Select>
+                     </Select>
+                  </div>
+                  <div v-if="item.displayDescription" class="txtSty">
+                    <Input v-model="item.description" placeholder="请输入提示信息（可选）" style="width: 300px" />
                   </div>
                 <div v-if="item.type==='radio' || item.type==='checkbox' || item.type==='dropdown'">
                   
@@ -25,22 +28,28 @@
                    <Button type="text" @click="addDatas(item)"> <Icon type="md-add" />添加选项</Button>
                    <Button type="text" @click="addDatas(item,'other')" v-show="other"> <Icon type="md-add" />添加其他</Button>
                 </div>
-                <div v-if="item.type==='text'">
-                    <Input :type="item.isMultiline ? 'textarea' : 'text'"  style="width: 200px;background-color: #ffffff;margin-left:10px" disabled :placeholder="item.isNumber ? '123' : ''"></Input>
+                <div v-if="item.type==='text'" class="txtSty">
+                    <Input :type="item.isMultiline ? 'textarea' : 'text'"  style="width: 200px;" disabled :placeholder="item.isNumber ? '123' : ''"></Input>
                 </div>
                
                 <div class="elOpt">
                    <Checkbox v-model="item.required">必填</Checkbox>                 
                    <Checkbox v-model="item.isHidden">隐藏</Checkbox>
                    <Checkbox v-model="item.isNumber">数字</Checkbox>
-                   <Checkbox v-model="item.isMultiline">多行</Checkbox>
+                   <Checkbox v-model="item.isMultiline" v-if="item.type==='text'">多行</Checkbox>
+                   <span @click="islogic"><i class="ivu-icon ivu-icon-ios-git-branch" style="color:#333333"></i></span>
                    <span @click="showAction">
                         <Tooltip content="更多设置" placement="top">
                          <i class="ivu-icon ivu-icon-ios-more"></i>
                      </Tooltip>
                    </span>
                    <div class="actionsheet" v-show="isShow">
-                       <Checkbox v-model="item.displayDescription" @on-change="isAddDes">添加提示信息</Checkbox>                 
+                      <div>
+                         <Checkbox v-model="item.displayDescription" @on-change="isAddDes">添加提示信息</Checkbox>    
+                      </div>
+                      <div>
+                         <Checkbox v-model="item.isVertical" v-show="item.type==='radio' || item.type==='checkbox'">纵向显示选项</Checkbox>    
+                      </div>             
                    </div>
 
                   <span class="op">
@@ -76,6 +85,9 @@ export default {
     },
     isAddDes() {
       this.isShow = false;
+    },
+    islogic() {
+      this.$emit("isLogicRule", this.item);
     },
     // 添加选项
     addDatas(obj, isOther) {
@@ -147,6 +159,10 @@ export default {
   font-size: 14px;
   border: solid 2px #f65;
 }
+.txtSty {
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
 
 .element .selSty {
   width: 100px;
@@ -200,6 +216,7 @@ a,
   position: absolute;
   left: 150px;
   top: 30px;
+  z-index: 3;
 }
 .elOpt > span.op {
   display: inline-block;

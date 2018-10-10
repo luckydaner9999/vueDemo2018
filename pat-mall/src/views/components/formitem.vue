@@ -38,7 +38,8 @@
                 ref="editEle"
                 :item.sync="selectObj"
                 @delete="deleteEle"
-                @copy="copyEl">
+                @copy="copyEl"
+                @isLogicRule="isLogicRule">
                 </edit-element>
              
               </div>
@@ -48,6 +49,43 @@
         
     </div>
     <Button @click="saveTemplate" style="float:right">保存模板</Button>
+     <Modal
+        v-model="logicModal"
+        title="逻辑设置"
+        @on-ok="ok"
+        width="500px"
+        >
+        <Row>
+          <Col span="11">
+          <div class="modalLog">
+            <div class="des">
+            如果本题选中
+            </div>
+            <div v-if="selectObj" >
+              <div v-for="(item, index) in selectObj.items" :key="index" class="btn100" :class="logIndex===index ? 'active' : ''" @click="checkLog(index)">
+                {{item.text}}
+              </div>
+            </div>
+          </div>
+            
+          </Col>
+          <Col span="2" style="line-height:300px;text-align:center">
+          <Icon type="ios-git-branch" style="color: #333;font-size: 20px;"/>
+          </Col>
+          <Col span="11">
+          
+         <div class="modalLog">
+           <div class="des"> 
+           则显示以下问题
+          </div>
+            <CheckboxGroup v-model="selectLogic.rule.displayItem">
+              <Checkbox :label="item._id" v-for="(item, m) in items" :key="m" v-show="m>checkIndex">{{item.label}}</Checkbox>
+          </CheckboxGroup>
+         </div>
+          </Col>
+        </Row>
+     
+    </Modal>
    </div>
 </template>
 <script>
@@ -57,6 +95,7 @@ export default {
     return {
       split1: 0.15,
       checkIndex: -1,
+      logIndex: 0,
       other: true,
       controls: [
         {
@@ -145,7 +184,16 @@ export default {
         }
       ],
       items: [],
-      selectObj: null
+      selectObj: null,
+      logicRule: [],
+      logicModal: false,
+      selectLogic: {
+        item: "",
+        rule: {
+          options:'',
+          displayItem: []
+        }
+      }
     };
   },
   methods: {
@@ -167,27 +215,41 @@ export default {
       let ob = obj.find(x => x.isOther);
       this.other = ob ? false : true;
     },
-  
+
     // 删除当前组件
     deleteEle(obj) {
       this.$Modal.confirm({
         title: "提示",
         content: "确定要删除该选项吗",
         onOk: () => {
-          this.items = this.items.filter((val) => val._id !== obj._id);
+          this.items = this.items.filter(val => val._id !== obj._id);
         }
       });
     },
     // 复制当前组件
     copyEl(obj) {
       let ob = JSON.parse(JSON.stringify(obj));
-      ob._id=this.getRandomId();
+      ob._id = this.getRandomId();
       this.items.push(ob);
       this.other = false;
     },
+    // 关联逻辑
+    isLogicRule(obj) {
+      this.selectLogic.item = obj._id;
+      this.logicModal = true;
+    },
+    ok() {
+      if(this.selectObj)
+      this.selectLogic.rule.options=this.selectObj.items[this.logIndex]._id;
+      this.logicRule.push(this.selectLogic);
+    },
+    checkLog(index) {
+      this.logIndex = index;
+    },
     saveTemplate() {
-      debugger
+      debugger;
       console.log(JSON.stringify(this.items));
+      console.log(JSON.stringify(this.logicRule));
     },
     // 获取随机id
     getRandomId() {
@@ -197,9 +259,7 @@ export default {
         .toUpperCase();
     }
   },
-  created() {
-   
-  },
+  created() {},
   components: {
     editElement
   }
@@ -211,6 +271,28 @@ export default {
   font-size: 15px;
   font-weight: bold;
   line-height: 36px;
+}
+.btn100 {
+  width: 100%;
+  border: none;
+  text-align: left;
+  height: 36px;
+  line-height: 36px;
+  padding-left: 10px;
+  cursor: pointer;
+}
+
+.btn100:hover {
+  background-color: #f2f2f2;
+}
+.btn100.active {
+  background-color: #ffffff;
+  border-top: solid 1px #d2d2d2;
+  border-bottom: solid 1px #d2d2d2;
+  box-sizing: border-box;
+}
+.btn100.active:first-child {
+  border-top: none;
 }
 .conItem {
   cursor: pointer;
@@ -225,7 +307,9 @@ export default {
   .ivu-checkbox-group-item {
     display: block;
   }
-  .ivu-select-disabled .ivu-select-selection,.ivu-input[disabled], fieldset[disabled] .ivu-input{
+  .ivu-select-disabled .ivu-select-selection,
+  .ivu-input[disabled],
+  fieldset[disabled] .ivu-input {
     background: #ffffff;
   }
 }
@@ -241,5 +325,23 @@ export default {
 }
 .demo-split-pane {
   padding: 10px;
+}
+.des {
+  color: #999;
+  font-size: 13px;
+}
+.modalLog .ivu-checkbox-group-item {
+  width: 100%;
+  margin-right: 0;
+  padding-left: 10px;
+  height: 32px;
+  line-height: 32px;
+}
+.modalLog > div:last-child {
+  border: solid 1px #d2d2d2;
+  height: 300px;
+  overflow: auto;
+  margin-top: 10px;
+  background: #f6f6f6;
 }
 </style>
