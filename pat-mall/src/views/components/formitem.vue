@@ -33,7 +33,26 @@
                       <Select style="width:200px" disabled>
                       </Select>
                     </div>
-                </div>
+                    <div v-if="item.type==='text-matrix'">
+                      <table class="matrix">
+                        <tr >
+                          <th></th>
+                          <th v-for="(column,n) in item.columns" :key="n" >
+                            {{column.text}}
+                          </th>
+                        </tr>  
+                        <tr v-for="(row,m) in item.rows" :key="m">
+                        
+                          <td>{{row.text}}</td>
+                          <td v-for="(column,n) in item.columns" :key="n" >
+                            <Input ></Input>
+                          </td>
+                        </tr>
+                 
+                      </table>
+                    </div>
+                     
+                  </div>
                 <edit-element v-if="selectObj && m===checkIndex"
                 ref="editEle"
                 :item.sync="selectObj"
@@ -180,6 +199,17 @@ export default {
           description: "", //描述信息
           isHidden: false, //是否隐藏
           _id: "", //关联数据项
+          required: true //对否必填
+        },
+        {
+          type: "text-matrix", //类型
+          label: "矩阵填空", //组件名称
+          displayDescription: false, //是否展示描述信息
+          description: "", //描述信息
+          isHidden: false, //是否隐藏
+          _id: "", //关联数据项
+          columns:[],
+          rows:[],
           required: true //对否必填
         }
       ],
@@ -344,4 +374,31 @@ export default {
   margin-top: 10px;
   background: #f6f6f6;
 }
+.matrix{
+  border-spacing: 0;
+  border-right: solid 1px #e5e5e5;
+   border-bottom: solid 1px #e5e5e5;
+   margin-left: 10px;
+   border-radius: 3px;
+}
+.matrix tr th:first-child{
+  min-width: 60px;
+}
+.matrix tr th,.matrix tr td:first-child{
+  background: #f5f5f5;  
+}
+.matrix tr:first-child th:first-child{
+    border-top-left-radius: 3px;
+}
+.matrix tr:last-child td:first-child{
+    border-bottom-left-radius: 3px;
+
+}
+
+.matrix tr td,.matrix tr th{
+   padding: 6px 8px;
+   border-left: solid 1px #e5e5e5;
+   border-top: solid 1px #e5e5e5;
+}
+
 </style>

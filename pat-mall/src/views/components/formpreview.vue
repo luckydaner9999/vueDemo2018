@@ -27,6 +27,11 @@
               <FormItem :label="item.label" v-if="item.type==='time'" :prop="item._id">
               <TimePicker :type="item.type" placeholder="Select time" v-model="dataValue[item._id]"></TimePicker >   
               </FormItem>
+              <table>
+                  <tr v-for="(row,m) in item.rows" :key="m">
+                      <th>{{row.text}}</th>
+                  </tr>
+              </table>
 
             </div>
         

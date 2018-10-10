@@ -25,9 +25,31 @@
                      </Tooltip>
                       
                   </div>
-                   <Button type="text" @click="addDatas(item)"> <Icon type="md-add" />添加选项</Button>
+                  <Button type="text" @click="addDatas(item)" v-if="item.type==='radio' || item.type==='checkbox' || item.type==='dropdown'"> <Icon type="md-add" />添加选项</Button>
+                   
                    <Button type="text" @click="addDatas(item,'other')" v-show="other"> <Icon type="md-add" />添加其他</Button>
                 </div>
+                <div v-if="item.type==='text-matrix'">
+                  <table class="matrix">
+                    <tr >
+                      <th></th>
+                      <th v-for="(column,n) in item.columns" :key="n" >
+                        <Input v-model="column.text"></Input> 
+                      </th>
+                    </tr>  
+                    <tr v-for="(row,m) in item.rows" :key="m">
+                    
+                      <td><Input v-model="row.text"></Input></td>
+                      <td v-for="(column,n) in item.columns" :key="n" >
+                        <Input ></Input>
+                      </td>
+                    </tr>
+                 
+              </table>
+               <Button type="text" @click="addnewRow()" > <Icon type="md-add" />添加新题目</Button>                    
+                   <Button type="text" @click="addnewColumn()" > <Icon type="md-add" />添加新选项</Button>
+                </div>
+               
                 <div v-if="item.type==='text'" class="txtSty">
                     <Input :type="item.isMultiline ? 'textarea' : 'text'"  style="width: 200px;" disabled :placeholder="item.isNumber ? '123' : ''"></Input>
                 </div>
@@ -74,6 +96,18 @@ export default {
     };
   },
   methods: {
+    addnewRow() {
+      this.item.rows.push({
+        _id: this.getRandomId(),
+        text: "题目" + (this.item.rows.length + 1)
+      });
+    },
+    addnewColumn() {
+      this.item.columns.push({
+        _id: this.getRandomId(),
+        text: "填空" + (this.item.columns.length + 1)
+      });
+    },
     deleteEle(obj) {
       this.$emit("delete", obj);
     },
@@ -248,5 +282,6 @@ a,
   top: 5px;
   left: 50px;
 }
+
 </style>
 
