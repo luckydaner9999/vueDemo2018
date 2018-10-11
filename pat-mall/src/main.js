@@ -5,6 +5,7 @@ import iView from 'iview'
 import '../my-theme/index.less';
 import App from './App'
 import router from './router'
+import htmlToPdf from '@/libs/htmltoPdf';
 
 
 Vue.config.productionTip = false
@@ -12,6 +13,7 @@ Vue.use(iView, {
   transfer: true,
   size: 'default'
 });
+Vue.use(htmlToPdf);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

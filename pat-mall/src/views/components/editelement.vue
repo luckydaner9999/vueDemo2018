@@ -29,19 +29,28 @@
                    
                    <Button type="text" @click="addDatas(item,'other')" v-show="other"> <Icon type="md-add" />添加其他</Button>
                 </div>
-                <div v-if="item.type==='text-matrix'">
-                  <table class="matrix">
+                <div v-if="item.type==='text-matrix' || item.type==='radio-matrix' || item.type==='checkbox-matrix'">
+                  <table class="matrix" v-show="item.columns.length>0 || item.rows.length>0">
                     <tr >
                       <th></th>
                       <th v-for="(column,n) in item.columns" :key="n" >
-                        <Input v-model="column.text"></Input> 
+                        <Input placeholder="Enter name" style="width: auto" v-model="column.text">
+                        <Icon type="md-close-circle" slot="suffix" @click="delColumn(column)"/> 
+                         </Input> 
                       </th>
                     </tr>  
                     <tr v-for="(row,m) in item.rows" :key="m">
                     
-                      <td><Input v-model="row.text"></Input></td>
+                      <td>
+                        <Input placeholder="Enter name" style="width: auto" v-model="row.text">
+                         <Icon type="md-close-circle" slot="suffix" @click="delRow(row)"/> 
+                         </Input> 
+                        
+                        </td>
                       <td v-for="(column,n) in item.columns" :key="n" >
-                        <Input ></Input>
+                        <Input v-if="item.type==='text-matrix'"></Input>
+                        <Radio v-if="item.type==='radio-matrix'"></Radio>
+                        <Checkbox v-if="item.type==='checkbox-matrix'"></Checkbox>
                       </td>
                     </tr>
                  
@@ -110,6 +119,12 @@ export default {
     },
     deleteEle(obj) {
       this.$emit("delete", obj);
+    },
+    delColumn(obj) {
+      this.item.columns = this.item.columns.filter(el => el._id !== obj._id);
+    },
+    delRow(obj) {
+      this.item.rows = this.item.rows.filter(el => el._id !== obj._id);
     },
     copyEl(obj) {
       this.$emit("copy", obj);
@@ -282,6 +297,5 @@ a,
   top: 5px;
   left: 50px;
 }
-
 </style>
 

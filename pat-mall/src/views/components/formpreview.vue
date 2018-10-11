@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Form  :label-width="80" style="margin:20px" :model="dataValue">
+        <Form  :label-width="80" class="prevForm" :model="dataValue" id="pdfDom">
             <div v-for="(item,index) in datas.items" :key="index">
               <FormItem :label="item.label" v-if="item.type==='text'" :prop="item._id">
                 <Input v-if="item.isMultiline" placeholder="请填写" type="textarea" v-model="dataValue[item._id]"></Input>
@@ -26,18 +26,45 @@
               </FormItem>
               <FormItem :label="item.label" v-if="item.type==='time'" :prop="item._id">
               <TimePicker :type="item.type" placeholder="Select time" v-model="dataValue[item._id]"></TimePicker >   
-              </FormItem>
-              <table>
+              </FormItem>      
+               <div v-if="item.type==='text-matrix' || item.type==='radio-matrix' || item.type==='checkbox-matrix'">
+               <div class="title">{{item.label}}</div>
+               <table class="matrix" v-show="item.columns.length>0 || item.rows.length>0">
+                  <tr >
+                    <th>题目</th>
+                    <th v-for="(column,n) in item.columns" :key="n">                     
+                      {{column.text}}
+                    </th>
+                  </tr>  
                   <tr v-for="(row,m) in item.rows" :key="m">
-                      <th>{{row.text}}</th>
+                    <td>{{row.text}}</td>
+                    <td v-for="(column,n) in item.columns" :key="n">
+                    
+                      <div v-if="item.type==='radio-matrix'">
+                        <input type="radio" :id="row._id+column._id" :value="row._id+column._id" v-model="picked">
+                        <label :for="row._id+column._id"></label>
+                      </div>
+                      <div v-if="item.type==='checkbox-matrix' " >
+                        <input type="checkbox" :name="row._id" :id="row._id+column._id" :value="row._id+column._id" v-model="checkList">   
+                        <label :for="row._id+column._id"></label>
+                      </div>
+                      <Input v-if="item.type==='text-matrix'" v-model="dataValue[item._id+'-'+row._id+'-'+column._id]"></Input>
+                    </td>
                   </tr>
-              </table>
+                 
+                </table> 
+           
+         
+               
+                </div>
 
             </div>
         
      
     </Form>
+    <Button @click="previewForm">预览</Button>
     <Button @click="saveData">保存</Button>
+    <Button @click="getPdf()">导出PDF文件</Button>
     </div>
 </template>
 <script>
@@ -46,152 +73,133 @@ export default {
     return {
       dataValue: {},
       datas: {
-        items: [
-          {
-            type: "radio",
-            label: "单选",
-            displayDescription: false,
-            description: "",
-            isHidden: false,
-            _id: "1CPEASED8",
-            required: true,
-            items: [
-              { isOther: false, text: "选项1", _id: "1CPEAS5LC" },
-              { isOther: false, text: "选项2", _id: "1CPEASK10" },
-              { isOther: false, text: "选项3", _id: "1CPEASKLG" },
-              { isOther: false, text: "选项4", _id: "1CPEASLC9" },
-              { isOther: true, text: "其他", _id: "1CPEASLVP" }
-            ],
-            isVertical: true
-          },
-          {
-            type: "checkbox",
-            label: "多选",
-            displayDescription: false,
-            description: "",
-            isHidden: false,
-            _id: "1CPEASFD0",
-            required: true,
-            items: [
-              { isOther: false, text: "选项1", _id: "1CPEAS5LD" },
-              { isOther: false, text: "选项2", _id: "1CPEASPCH" },
-              { isOther: false, text: "选项3", _id: "1CPEASQ7G" },
-              { isOther: false, text: "选项4", _id: "1CPEASQNO" },
-              { isOther: false, text: "选项5发发发", _id: "1CPEASRGN" },
-              { isOther: true, text: "其他", _id: "1CPEASS48" }
-            ],
-            isVertical: true
-          },
-          {
-            type: "dropdown",
-            label: "下拉框",
-            displayDescription: false,
-            description: "",
-            isHidden: false,
-            _id: "1CPEASGR8",
-            required: true,
-            items: [
-              { isOther: false, text: "选项1", _id: "1CPEAS5LD" },
-              { isOther: false, text: "选项2", _id: "1CPEAT33H" },
-              { isOther: false, text: "选项3", _id: "1CPEAT3U7" },
-              { isOther: false, text: "选项4", _id: "1CPEAT4H0" },
-              { isOther: true, text: "其他", _id: "1CPEAT567" }
-            ]
-          },
-          {
-            type: "text",
-            label: "输入框1",
-            displayDescription: false,
-            description: "",
-            isHidden: false,
-            _id: "1CPEAT807",
-            required: true
-          },
-          {
-            type: "text",
-            label: "输入框多行",
-            displayDescription: false,
-            description: "",
-            isHidden: false,
-            _id: "1CPEATDV8",
-            required: true,
-            isMultiline: true
-          },
-          {
-            type: "date",
-            label: "日期",
-            displayDescription: false,
-            description: "",
-            isHidden: false,
-            _id: "1CPEATND7",
-            required: true
-          },
-          {
-            type: "datetime",
-            label: "日期时间",
-            displayDescription: false,
-            description: "",
-            isHidden: false,
-            _id: "1CPEATOVF",
-            required: true
-          },
-          {
-            type: "time",
-            label: "时间",
-            displayDescription: false,
-            description: "",
-            isHidden: false,
-            _id: "1CPEATPLF",
-            required: true
-          }
-        ],
-        logicRule: [
-          {
-            item: "1CPEASGR8",
-            rule: {
-              options: "1CPEAT33H",
-              displayItem: [
-                "1CPEASGR8",
-                "1CPEAT807",
-                "1CPEATND7",
-                "1CPEATOVF",
-                "1CPEATDV8",
-                "1CPEATPLF"
-              ]
-            }
-          },
-          {
-            item: "1CPEASGR8",
-            rule: {
-              options: "1CPEAT33H",
-              displayItem: [
-                "1CPEASGR8",
-                "1CPEAT807",
-                "1CPEATND7",
-                "1CPEATOVF",
-                "1CPEATDV8",
-                "1CPEATPLF"
-              ]
-            }
-          }
-        ]
-      }
+        checkList: [],
+        items: [],
+        logicRules: []
+      },
+      picked: [],
+      checkList: [],
+      htmlTitle: "页面导出PDF文件名"
     };
   },
   methods: {
-    saveData() {        
+    saveData() {
       debugger;
     },
+    previewForm() {
+      (this.datas.items = [
+        {
+          type: "radio",
+          label: "单选",
+          displayDescription: false,
+          description: "",
+          isHidden: false,
+          _id: "1CPH800M9",
+          required: true,
+          items: [
+            { isOther: false, text: "选项1", _id: "1CPH7VUFU" },
+            { isOther: false, text: "选项2", _id: "1CPH803RH" },
+            { isOther: false, text: "选项3", _id: "1CPH804CJ" },
+            { isOther: false, text: "选项4", _id: "1CPH804U1" },
+            { isOther: true, text: "其他", _id: "1CPH805M1" }
+          ]
+        },
+        {
+          type: "checkbox",
+          label: "多选",
+          displayDescription: false,
+          description: "",
+          isHidden: false,
+          _id: "1CPH801L8",
+          required: true,
+          items: [
+            { isOther: false, text: "选项1", _id: "1CPH7VUFU" },
+            { isOther: false, text: "选项2", _id: "1CPH80GJI" }
+          ]
+        },
+        {
+          type: "text",
+          label: "输入框",
+          displayDescription: false,
+          description: "",
+          isHidden: false,
+          _id: "1CPH80E73",
+          required: true
+        }
+      ]),
+        (this.datas.logicRules = [
+          {
+            item: "1CPH800M9",
+            rule: { options: "1CPH7VUFU", displayItem: ["1CPH80E73"] }
+          }
+        ]);
 
+      this.datas.logicRules.forEach(element => {
+        if (
+          this.dataValue[element.item] &&
+          element.rule.options === this.dataValue[element.item]
+        ) {
+          debugger;
+          console.log(element.rule.displayItem);
+        }
+      });
+    }
   },
   created() {},
-  mounted() {
-  }
+  mounted() {}
 };
 </script>
 <style lang="less" scoped>
+.prevForm {
+  margin: 20px 400px;
+  background: #ffffff;
+  padding: 10px;
+  border-radius: 3px;
+  box-shadow: 0px 2px 8px #f2f2f2;
+  .title {
+    font-size: 12px;
+    color: #515a6e;
+    line-height: 1;
+    padding: 10px 12px 10px 0;
+  }
+}
 .isVertical.ivu-checkbox-group-item {
   display: block;
+}
+.matrix {
+  width: 100%;
+  border-spacing: 0;
+  border-radius: 3px;
+  box-sizing: border-box;
+  text-align: center;
+  margin-bottom: 24px;
+  border-right: solid 1px #e5e5e5;
+  border-bottom: solid 1px #e5e5e5;
+}
+
+.matrix tr th:first-child {
+  min-width: 60px;
+}
+.matrix tr th,
+.matrix tr td:first-child {
+  background: #f5f5f5;
+}
+.matrix tr:first-child th:first-child {
+  border-top-left-radius: 3px;
+}
+.matrix tr:last-child td:first-child {
+  border-bottom-left-radius: 3px;
+}
+
+.matrix tr td,
+.matrix tr th {
+  padding: 6px 8px;
+  border-left: solid 1px #e5e5e5;
+  border-top: solid 1px #e5e5e5;
+  text-align: center;
+}
+.matrix .ivu-input-suffix i {
+  color: #f65;
 }
 </style>
 

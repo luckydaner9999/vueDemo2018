@@ -33,8 +33,8 @@
                       <Select style="width:200px" disabled>
                       </Select>
                     </div>
-                    <div v-if="item.type==='text-matrix'">
-                      <table class="matrix">
+                    <div v-if="item.type==='text-matrix' || item.type==='radio-matrix' || item.type==='checkbox-matrix'">
+                      <table class="matrix" v-show="item.columns.length>0 || item.rows.length>0">
                         <tr >
                           <th></th>
                           <th v-for="(column,n) in item.columns" :key="n" >
@@ -45,7 +45,9 @@
                         
                           <td>{{row.text}}</td>
                           <td v-for="(column,n) in item.columns" :key="n" >
-                            <Input ></Input>
+                           <Input v-if="item.type==='text-matrix'"></Input>
+                           <Radio v-if="item.type==='radio-matrix'"></Radio>
+                           <Checkbox v-if="item.type==='checkbox-matrix'"></Checkbox>
                           </td>
                         </tr>
                  
@@ -204,6 +206,28 @@ export default {
         {
           type: "text-matrix", //类型
           label: "矩阵填空", //组件名称
+          displayDescription: false, //是否展示描述信息
+          description: "", //描述信息
+          isHidden: false, //是否隐藏
+          _id: "", //关联数据项
+          columns:[],
+          rows:[],
+          required: true //对否必填
+        },
+        {
+          type: "radio-matrix", //类型
+          label: "矩阵单选", //组件名称
+          displayDescription: false, //是否展示描述信息
+          description: "", //描述信息
+          isHidden: false, //是否隐藏
+          _id: "", //关联数据项
+          columns:[],
+          rows:[],
+          required: true //对否必填
+        },
+        {
+          type: "checkbox-matrix", //类型
+          label: "矩阵多选", //组件名称
           displayDescription: false, //是否展示描述信息
           description: "", //描述信息
           isHidden: false, //是否隐藏
@@ -375,11 +399,14 @@ export default {
   background: #f6f6f6;
 }
 .matrix{
+  min-width: 500px;
   border-spacing: 0;
   border-right: solid 1px #e5e5e5;
    border-bottom: solid 1px #e5e5e5;
    margin-left: 10px;
    border-radius: 3px;
+   box-sizing: border-box;
+   text-align: center;
 }
 .matrix tr th:first-child{
   min-width: 60px;
@@ -399,6 +426,11 @@ export default {
    padding: 6px 8px;
    border-left: solid 1px #e5e5e5;
    border-top: solid 1px #e5e5e5;
+   text-align: center;
 }
+.matrix .ivu-input-suffix i{
+color: #f65;
+}
+
 
 </style>
