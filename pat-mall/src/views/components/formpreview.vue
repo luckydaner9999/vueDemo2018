@@ -67,6 +67,7 @@
                        <td>{{row.text}}</td>
                        <td v-for="(column,n) in item.columns" :key="n">
                        <DatePicker v-if="column.type==='date'" type="date" placeholder="Select date" style="width: 100%" v-model="dataValue[item._id+'-'+row._id+'-'+column._id]"  ></DatePicker>
+                       <Checkbox v-else-if="column.type==='checkbox'" v-model="dataValue[item._id+'-'+row._id+'-'+column._id]" > </Checkbox>
                        <Input v-else v-model="dataValue[item._id+'-'+row._id+'-'+column._id]"></Input>
                        </td>
                      </tr>
@@ -153,7 +154,7 @@ export default {
           columns: [
             { _id: "1CPJ23808", text: "填空1", type: "date" },
             { _id: "1CPJ238UF", text: "填空2" },
-            { _id: "1CPJ239CV", text: "填空3" },
+            { _id: "1CPJ239CV", text: "填空3", type: "checkbox"},
             { _id: "1CPJ239OP", text: "填空4", type: "date" },
             { _id: "1CPJ239UN", text: "填空5" },
             { _id: "1CPJ23A5P", text: "填空6", type: "date" }
@@ -195,7 +196,7 @@ export default {
         "1CPJ231H1-1CPJ237A7-1CPJ239OP": "",
         "1CPJ231H1-1CPJ237A7-1CPJ23A5P": "",
         "1CPJ231H1-1CPJ2343F-1CPJ238UF": "hhh",
-        "1CPJ231H1-1CPJ2343F-1CPJ239CV": "hjk"
+        "1CPJ231H1-1CPJ2343F-1CPJ239CV": true
       };
 
       this.datas.logicRules.forEach(element => {
