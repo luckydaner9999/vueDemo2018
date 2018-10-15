@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Registor from '../views/registor'
 import FormItem from '../views/components/formitem.vue'
 import FormPreview from '../views/components/formpreview.vue'
+import dynamicTable from '../views/components/dynamicTable.vue'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/formPre',
       name: 'formPre',
       component: FormPreview
+    },
+    {
+      path: '/dynamicTable',
+      name: 'dynamicTable',
+      component: dynamicTable
     },
   ]
 })
