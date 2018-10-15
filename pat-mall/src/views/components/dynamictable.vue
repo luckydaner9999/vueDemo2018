@@ -5,10 +5,10 @@
             <Col span="4">
             <Button @click="addTable">表格</Button>
             <Button @click="getData">获取数据</Button>
+            <Button @click="getRowTable">获取表格</Button>
 
             <Button>输入框</Button>
-            <!-- <Button>表格</Button>
-            <Button>表格</Button> -->
+
             </Col>
             <Col span="24">
            <div  v-for="item in tableList">
@@ -16,13 +16,21 @@
               <Table :columns="item.table.columns" :data="item.table.data" border></Table>
            </div>
             </Col>
+             <Col span="24">
+         
+             <div  v-for="item in rowsTableList">
+             {{item.label}} 
+              <Table :columns="item.table.columns" :data="item.table.data" border ref="rowTable"></Table>
+              <Button v-if="item.isCanAddRow" @click="addRows(item)">添加受试者</Button>
+           </div>
+            </Col>
         </Row>
     </div>
 </template>
 <script>
-import dTable from './dTable.vue';
+import tableCell from "./tableCell.vue";
+import tableCellVue from "./tableCell.vue";
 export default {
-
   data() {
     return {
       tableList: [
@@ -36,25 +44,27 @@ export default {
           isCanAddRow: false,
           table: {
             columns: [
-              { title: "受试者编号", key: "key0", status: "",
-             },
-              { title: "访视周期", key: "key1", status: "",
-               render: (h, params) => {
-
-                      return h(dTable,[
-                       
-                      ])
-                     
-                    } },
+              {
+                title: "受试者编号",
+                key: "key0",
+                status: ""
+              },
+              {
+                title: "访视周期",
+                key: "key1",
+                status: ""
+              },
               {
                 title: "访视日期",
                 key: "key2",
                 status: "",
+                type: "date",
                 render: (h, params) => {
-                  return h("div", [
-                    h("Input", {})
-                    // h("strong", params.row.name)
-                  ]);
+                  return h(tableCell, {
+                    props: {
+                      type: params.column.type
+                    }
+                  });
                 }
               },
               {
@@ -66,12 +76,10 @@ export default {
                     title: "edc登记",
                     key: "key2-0",
                     status: "",
-                    type:'Input',
+                    type: "Input",
                     render: (h, params) => {
                       console.log(params.column.type);
-                      return h(params.column.type,[
-                      ])
-                     
+                      return h(params.column.type, []);
                     }
                   },
                   { title: "药品发放", key: "key2-1", status: "" },
@@ -80,10 +88,9 @@ export default {
                     title: "EDC录入",
                     key: "key2-3",
                     status: "",
-                    type:'Checkbox',
+                    type: "Checkbox",
                     render: (h, params) => {
-                       return h(params.column.type,[
-                      ])
+                      return h(params.column.type, []);
                     }
                   }
                 ]
@@ -101,7 +108,64 @@ export default {
                 key1: "访视周期2",
                 "key2-0": "12",
                 "key2-1": "23"
+              }
+            ]
+          },
+          _id: 1539334152346
+        }
+      ],
+      rowsTableList: [
+        {
+          label: "预设表格多行",
+          required: false,
+          description: "",
+          displayDescription: false,
+          isHidden: false,
+          type: "table",
+          isCanAddRow: true,
+          table: {
+            row:2,
+            columns: [
+              {
+                title: "受试者编号",
+                key: "key0",
+                status: "",
               },
+              { title: "访视代码", key: "key1", status: "" },
+              {
+                title: "样本类型",
+                key: "key2",
+                status: "",
+                type: "date"
+              },
+              {
+                title: "计划寄送时间",
+                key: "key3",
+                status: ""
+              },
+              {
+                title: "实际寄送时间",
+                key: "key4",
+                status: ""
+              }
+            ],
+            data: [
+              {
+                key0: "受试者编号1",
+                key1: "访视编号1",
+                key2: "ADA NAB检测样本",
+                key3: "NA",
+                key4: "NA",
+                key5: "NA"
+              },
+              {
+                key0: "受试者编号1",
+                key1: "访视编号1",
+                key2: "ADA 备份样本",
+                key3: "NA",
+                key4: "NA",
+                key5: "NA"
+              }
             ]
           },
           _id: 1539334152346
@@ -131,10 +195,26 @@ export default {
         });
       }
       this.data10 = data;
+    },
+    getRowTable(){
+      this.$refs.rowTable;
+      debugger;
+    },
+    addRows(obj){
+      for (let i=0;i<obj.table.row;i++){
+        let rowDat={};
+       obj.table.columns.forEach(element => {
+         rowDat[element.key]='';
+        
+       });
+        obj.table.data.push(rowDat);  
+      }
+      console.log(obj.table.data)
+
     }
   },
-  components:{
-    dTable
+  components: {
+    tableCell
   }
 };
 </script>

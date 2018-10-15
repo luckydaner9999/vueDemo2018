@@ -1,10 +1,12 @@
 <template>
    <div>
-        <Table :columns="columns" :data="datas"></Table>
+     {{type}}
+        <!-- <Table :columns="columns" :data="datas"></Table> -->
    </div>
 </template>
 <script>
 export default {
+  props:['type'],
   data() {
     return {
       columns: [
