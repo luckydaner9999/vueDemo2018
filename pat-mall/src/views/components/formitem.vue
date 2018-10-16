@@ -33,7 +33,7 @@
                       <Select style="width:200px" disabled>
                       </Select>
                     </div>
-                    <div v-if="item.type==='text-matrix' || item.type==='radio-matrix' || item.type==='checkbox-matrix'">
+                    <!-- <div v-if="item.type==='text-matrix' || item.type==='radio-matrix' || item.type==='checkbox-matrix'">
                       <table class="matrix" v-show="item.columns.length>0 || item.rows.length>0">
                         <tr >
                           <th></th>
@@ -52,6 +52,37 @@
                         </tr>
                  
                       </table>
+                    </div> -->
+                      <div v-if="item.type==='text-matrix'">
+                        <!-- {{item.table}} -->
+                        <table class="matrix" v-show="item.table.columns.length>0 || item.table.data.length>0">
+                    <tr >                      
+                      <th v-for="(column,n) in item.table.columns" :key="n" >
+                        <Input placeholder="Enter name" style="width: auto" v-model="column.title">
+                        <Icon type="md-close-circle" slot="suffix" @click="item.table.columns.splice(n,1)"/> 
+                         </Input> 
+                      </th>
+                    </tr>  
+                    <tr>
+                    <tr v-for="(row, r) in item.table.data" :key="r" v-if="r%item.table.row===0">
+                      <td :rowspan="item.table.row" :class="{ts:item.table.row>1}">
+                           {{item.table.columns[0].key}}
+                      </td>
+                      <td v-for="(column,n) in item.table.columns" :key="n" :class="{hidden:column}" v-if="n>0">
+                        <Input v-if="column.type==='text'"></Input>
+                           <Radio v-if="column.type==='radio'"></Radio>
+                           <Checkbox v-if="column.type==='checkbox'"></Checkbox>
+                           <Input type="textarea"></Input>
+                        <!-- <Input v-model="row[column.key]"></Input> -->
+                      </td>
+                    </tr>
+                     <tr v-else>
+                      <td v-for="(column,n) in item.table.columns" :key="n" :class="{hidden:column}" v-if="n>0">
+                        <Input v-model="row[column.key]"></Input>
+                      </td>
+                    </tr>
+                      
+                 </table>
                     </div>
                      
                   </div>
@@ -210,8 +241,11 @@ export default {
           description: "", //描述信息
           isHidden: false, //是否隐藏
           _id: "", //关联数据项
-          columns:[],
-          rows:[],
+          table: {
+            row: 4,
+            columns: [],
+            data: []
+          },
           required: true //对否必填
         },
         {
@@ -221,8 +255,8 @@ export default {
           description: "", //描述信息
           isHidden: false, //是否隐藏
           _id: "", //关联数据项
-          columns:[],
-          rows:[],
+          columns: [],
+          rows: [],
           required: true //对否必填
         },
         {
@@ -232,19 +266,138 @@ export default {
           description: "", //描述信息
           isHidden: false, //是否隐藏
           _id: "", //关联数据项
-          columns:[],
-          rows:[],
+          columns: [],
+          rows: [],
           required: true //对否必填
         }
       ],
-      items: [],
+      items: [
+        {
+          type: "text-matrix",
+          label: "矩阵填空",
+          displayDescription: false,
+          description: "",
+          isHidden: false,
+          _id: "1CPU2TH5Q",
+          table: {
+            row: 2,
+            columns: [
+              { key: "1CPU2TJ1A", title: "标题1", type: "text" },
+              { key: "1CPU2TJOB", title: "标题2", type: "input" },
+              { key: "1CPU2TKCR", title: "标题3", type: "input" },
+              // { key: "1CPU2TKOA", title: "标题4", type: "checkbox" },
+              { key: "1CPU2TKUK", title: "标题5", type: "textarea" },
+              { key: "1CPU2TL5A", title: "标题6", type: "date" }
+            ],
+            data: [
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              },
+              {
+                "1CPU2TJ1A": "",
+                "1CPU2TJOB": "",
+                "1CPU2TKCR": "",
+                "1CPU2TKOA": "",
+                "1CPU2TKUK": "",
+                "1CPU2TL5A": ""
+              }
+            ]
+          },
+          required: true
+        }
+      ],
       selectObj: null,
       logicRule: [],
       logicModal: false,
       selectLogic: {
         item: "",
         rule: {
-          options:'',
+          options: "",
           displayItem: []
         }
       }
@@ -293,8 +446,8 @@ export default {
       this.logicModal = true;
     },
     ok() {
-      if(this.selectObj)
-      this.selectLogic.rule.options=this.selectObj.items[this.logIndex]._id;
+      if (this.selectObj)
+        this.selectLogic.rule.options = this.selectObj.items[this.logIndex]._id;
       this.logicRule.push(this.selectLogic);
     },
     checkLog(index) {
@@ -398,39 +551,38 @@ export default {
   margin-top: 10px;
   background: #f6f6f6;
 }
-.matrix{
+.matrix {
   min-width: 500px;
   border-spacing: 0;
   border-right: solid 1px #e5e5e5;
-   border-bottom: solid 1px #e5e5e5;
-   margin-left: 10px;
-   border-radius: 3px;
-   box-sizing: border-box;
-   text-align: center;
+  border-bottom: solid 1px #e5e5e5;
+  margin-left: 10px;
+  border-radius: 3px;
+  box-sizing: border-box;
+  text-align: center;
 }
-.matrix tr th:first-child{
+.matrix tr th:first-child {
   min-width: 60px;
 }
-.matrix tr th,.matrix tr td:first-child{
-  background: #f5f5f5;  
+.matrix tr th,
+.matrix tr td.ts {
+  background: #f5f5f5;
 }
-.matrix tr:first-child th:first-child{
-    border-top-left-radius: 3px;
+.matrix tr:first-child th:first-child {
+  border-top-left-radius: 3px;
 }
-.matrix tr:last-child td:first-child{
-    border-bottom-left-radius: 3px;
-
-}
-
-.matrix tr td,.matrix tr th{
-   padding: 6px 8px;
-   border-left: solid 1px #e5e5e5;
-   border-top: solid 1px #e5e5e5;
-   text-align: center;
-}
-.matrix .ivu-input-suffix i{
-color: #f65;
+.matrix tr:last-child td:first-child {
+  border-bottom-left-radius: 3px;
 }
 
-
+.matrix tr td,
+.matrix tr th {
+  padding: 6px 8px;
+  border-left: solid 1px #e5e5e5;
+  border-top: solid 1px #e5e5e5;
+  text-align: center;
+}
+.matrix .ivu-input-suffix i {
+  color: #f65;
+}
 </style>

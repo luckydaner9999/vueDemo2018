@@ -30,31 +30,35 @@
                    <Button type="text" @click="addDatas(item,'other')" v-show="other"> <Icon type="md-add" />添加其他</Button>
                 </div>
                 <div v-if="item.type==='text-matrix' || item.type==='radio-matrix' || item.type==='checkbox-matrix'">
-                  <table class="matrix" v-show="item.columns.length>0 || item.rows.length>0">
-                    <tr >
-                      <th></th>
-                      <th v-for="(column,n) in item.columns" :key="n" >
-                        <Input placeholder="Enter name" style="width: auto" v-model="column.text">
-                        <Icon type="md-close-circle" slot="suffix" @click="delColumn(column)"/> 
+                  <table class="matrix" v-show="item.table.columns.length>0 || item.table.data.length>0">
+                    <tr >                      
+                      <th v-for="(column,n) in item.table.columns" :key="n" >
+                        <Input placeholder="Enter name" style="width: auto" v-model="column.title">
+                        <Icon type="md-close-circle" slot="suffix" @click="item.table.columns.splice(n,1)"/> 
                          </Input> 
                       </th>
                     </tr>  
-                    <tr v-for="(row,m) in item.rows" :key="m">
-                    
-                      <td>
-                        <Input placeholder="Enter name" style="width: auto" v-model="row.text">
-                         <Icon type="md-close-circle" slot="suffix" @click="delRow(row)"/> 
-                         </Input> 
+                    <tr>
+                    <tr v-for="(row, r) in item.table.data" :key="r" v-if="r%item.table.row===0">
+                      <td :rowspan="item.table.row" :class="{ts:item.table.row>1}">
+                           {{item.table.columns[0].key}}
+                      </td>
+                      <td v-for="(column,n) in item.table.columns" :key="n" :class="{hidden:column}" v-if="n>0">
+                         <Input v-if="column.type==='input'"></Input>
+                          <Input v-if="column.type==='textarea'" type="textarea" ></Input>
                         
-                        </td>
-                      <td v-for="(column,n) in item.columns" :key="n" >
-                        <Input v-if="item.type==='text-matrix'"></Input>
-                        <Radio v-if="item.type==='radio-matrix'"></Radio>
-                        <Checkbox v-if="item.type==='checkbox-matrix'"></Checkbox>
                       </td>
                     </tr>
-                 
-              </table>
+                     <tr v-else>
+                      <td v-for="(column,n) in item.table.columns" :key="n" :class="{hidden:column}" v-if="n>0">
+                         <Input v-if="column.type==='input'"></Input>
+                          <Input v-if="column.type==='textarea'" type="textarea" ></Input>
+                      </td>
+                    </tr>
+                      
+                 </table>
+
+                
                <Button type="text" @click="addnewRow()" > <Icon type="md-add" />添加新题目</Button>                    
                    <Button type="text" @click="addnewColumn()" > <Icon type="md-add" />添加新选项</Button>
                 </div>
@@ -106,16 +110,24 @@ export default {
   },
   methods: {
     addnewRow() {
-      this.item.rows.push({
-        _id: this.getRandomId(),
-        text: "题目" + (this.item.rows.length + 1)
-      });
+      for (let i = 0; i < this.item.table.row; i++) {
+        let rowObj = {};
+
+        this.item.table.columns.forEach(element => {
+          this.$set(rowObj, element.key, '');
+          console.log(element.key);
+        });
+        this.item.table.data.push(rowObj);
+      }
     },
+
     addnewColumn() {
-      this.item.columns.push({
-        _id: this.getRandomId(),
-        text: "填空" + (this.item.columns.length + 1)
+      this.item.table.columns.push({
+        key: this.getRandomId(),
+        title: "标题" + (this.item.table.columns.length + 1),
+        type: "date"
       });
+      console.log(this.item.table.columns);
     },
     deleteEle(obj) {
       this.$emit("delete", obj);
@@ -296,6 +308,11 @@ a,
   border: solid 1px #d2d2d2;
   top: 5px;
   left: 50px;
+}
+.table-header > div,
+.table-row > div {
+  display: inline-block;
+  width: 200px;
 }
 </style>
 

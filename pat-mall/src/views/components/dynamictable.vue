@@ -29,7 +29,6 @@
 </template>
 <script>
 import tableCell from "./tableCell.vue";
-import tableCellVue from "./tableCell.vue";
 export default {
   data() {
     return {
