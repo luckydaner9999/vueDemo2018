@@ -5,6 +5,7 @@ import Registor from '../views/registor'
 import FormItem from '../views/components/formitem.vue'
 import FormPreview from '../views/components/formpreview.vue'
 import dynamicTable from '../views/components/dynamicTable.vue'
+import Anchor from '../views/components/anchor.vue'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/dynamicTable',
       name: 'dynamicTable',
       component: dynamicTable
+    },
+    {
+      path: '/anchor',
+      name: 'anchor',
+      component: Anchor
     },
   ]
 })

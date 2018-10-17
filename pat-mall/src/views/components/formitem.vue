@@ -285,9 +285,9 @@ export default {
               { key: "1CPU2TJ1A", title: "标题1", type: "text" },
               { key: "1CPU2TJOB", title: "标题2", type: "input" },
               { key: "1CPU2TKCR", title: "标题3", type: "input" },
-              // { key: "1CPU2TKOA", title: "标题4", type: "checkbox" },
+              { key: "1CPU2TKOA", title: "标题4", type: "textarea" },
               { key: "1CPU2TKUK", title: "标题5", type: "textarea" },
-              { key: "1CPU2TL5A", title: "标题6", type: "date" }
+              { key: "1CPU2TL5A", title: "标题6", type: "textarea" }
             ],
             data: [
               {
