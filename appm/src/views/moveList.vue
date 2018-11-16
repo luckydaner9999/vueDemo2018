@@ -1,9 +1,25 @@
+<style lang="less" scoped>
+.searchpart{
+  .selCity{
+     position: absolute;
+    left: 0.3rem;
+    top: 0.38rem;
+    font-size: 0.25rem;
+  }
+  .ipt{
+    margin-left: 1.2rem;
+    background: #f2f2f2;
+    border-radius: 3px;
+    padding: 8px 6px;
+  }
+}
+</style>
+
 <template>
     <div>
         <div class="searchpart">
-            <span>苏州   <x-icon type="ios-arrow-down" size="15"></x-icon></span>
-            <x-input title="" v-model="value"></x-input>
-
+            <span @click.stop="select" class="selCity">苏州   <x-icon type="ios-arrow-down" size="12"></x-icon></span>
+            <x-input  title="" placeholder="电影 / 电视剧 / 影人" class="ipt"></x-input> 
         </div>
     <!-- <search
       placeholder="电影 / 电视剧 / 影人"
@@ -25,7 +41,8 @@ export default {
   data() {
     return {
       results: [],
-      value: ""
+      value: "",
+      style:'color:red'
     };
   },
   methods: {
@@ -52,6 +69,9 @@ export default {
     },
     onCancel() {
       console.log("on cancel");
+    },
+    select(){
+      console.log('clic')
     }
   }
 };

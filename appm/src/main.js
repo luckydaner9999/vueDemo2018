@@ -4,7 +4,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import { AlertPlugin, ToastPlugin } from 'vux'
-import { Tab, TabItem ,Tabbar, TabbarItem, Search,XInput} from 'vux'
+import { Tab, TabItem ,Tabbar, TabbarItem, Search,XInput,Group} from 'vux'
 
 Vue.component('tab', Tab)
 Vue.component('tab-item', TabItem)
@@ -12,7 +12,7 @@ Vue.component('tabbar', Tabbar)
 Vue.component('tabbar-item', TabbarItem)
 Vue.component('search', Search)
 Vue.component('x-input', XInput)
-
+Vue.component('group', Group)
 
 Vue.config.productionTip = false
 
