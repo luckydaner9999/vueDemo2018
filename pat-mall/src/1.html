@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var f = {
+      "code": "test",
+      "createBy": null,
+      "createDt": null,
+      "desc": null,
+      "id": null,
+      "module": [{
+        "cnName": null,
+        "code": "weeklyInfoMod",
+        "desc": null,
+        "enName": null,
+        "id": "2365623287607589",
+        "modEle": [{
+          "cnName": "项目编号",
+          "code": "projNo",
+          "desc": null,
+          "enName": "Project No",
+          "id": "2365623288873510",
+          "row": "1",
+          "type": "text",
+          "value": null
+        }, {
+          "cnName": "拜访日期",
+          "code": "weeklyDt",
+          "desc": null,
+          "enName": "Visit Duration",
+          "id": "2365623288895270",
+          "row": "1",
+          "type": "text",
+          "value": null
+        }, {
+          "cnName": "中心编号",
+          "code": "siteNo",
+          "desc": null,
+          "enName": "Site No",
+          "id": "2365623288902096",
+          "row": "2",
+          "type": "text",
+          "value": null
+        }, {
+          "cnName": "CRC 姓名",
+          "code": "crcName",
+          "desc": null,
+          "enName": "CRC Name",
+          "id": "2365623288906363",
+          "row": "2",
+          "type": "text",
+          "value": null
+        }, {
+          "cnName": "中心名称",
+          "code": "siteName",
+          "desc": null,
+          "enName": "Site Name",
+          "id": "2365623288910203",
+          "row": null,
+          "type": "text",
+          "value": null
+        }],
+        "moduleName": null
+      }, {
+        "cnName": "下周计划",
+        "code": "nextWeeklyPlan",
+        "desc": null,
+        "enName": "Plan For This Week",
+        "id": "2365623288936230",
+        "modEle": [{
+          "canAddRow": true,
+          "cnName": "受试者访视计划",
+          "code": "SubVisitPlan",
+          "columns": [{
+            "cnName": "受试者编号",
+            "code": "subCode",
+            "enName": "Subject No",
+            "id": "2365623290175270",
+            "type": "text"
+          }, {
+            "cnName": "访视名称",
+            "code": "visitCode",
+            "enName": "Visit Code",
+            "id": "2365623290209403",
+            "type": "text"
+          }, {
+            "cnName": "访视/随访日期",
+            "code": "visitDt",
+            "enName": "Visit Date/Followup Date",
+            "id": "2365623290218364",
+            "type": "text"
+          }],
+          "desc": null,
+          "enName": "Subject Visit Plan",
+          "id": "2365623289555324",
+          "label": "受试者访视计划",
+          "type": "table"
+        }, {
+          "canAddRow": true,
+          "cnName": "目前中心存在的问题",
+          "code": "problems",
+          "columns": [{
+            "cnName": "存在问题",
+            "code": "problem",
+            "enName": "Problem",
+            "id": "2365623290239697",
+            "type": "text"
+          }, {
+            "cnName": "解决途径/需要的支持",
+            "code": "solution",
+            "enName": "Solution/required support",
+            "id": "2365623290248230",
+            "type": "text"
+          }, {
+            "cnName": "结果",
+            "code": "result",
+            "enName": "Result",
+            "id": "2365623290253777",
+            "type": "text"
+          }, {
+            "cnName": "备注",
+            "code": "problemComments",
+            "enName": "Comments",
+            "id": "2365623290262310",
+            "type": "textarea"
+          }],
+          "desc": null,
+          "enName": "Current problems in the site",
+          "id": "2365623290232017",
+          "label": "目前中心存在的问题",
+          "type": "table"
+        }],
+        "moduleName": null
+      }, {
+        "cnName": "其他",
+        "code": null,
+        "desc": null,
+        "enName": "Other",
+        "id": "2365623290875857",
+        "modEle": [{
+          "cnName": "本周工作内容",
+          "code": "weeklyWork",
+          "desc": null,
+          "enName": "Weekly Work",
+          "id": "2365623290842151",
+          "type": "textarea"
+        }, {
+          "cnName": "下周计划工作内容",
+          "code": "nextWeeklyWork",
+          "desc": null,
+          "enName": "Next Weekly Work",
+          "id": "2365623290867751",
+          "type": "textarea"
+        }],
+        "moduleName": null
+      }],
+      "name": null,
+      "orgId": "1",
+      "projectId": null,
+      "updateBy": null,
+      "updateDt": null,
+      "value": [{
+        "eleCode": "weeklyInfoMod",
+        "eleValueList": [{
+          "code": "projNo",
+          "data": "projNo1",
+          "type": "str"
+        }, {
+          "code": "weeklyDt",
+          "data": "weeklyDt1",
+          "type": "str"
+        }],
+        "moduleCode": null
+      }, {
+        "eleCode": "nextWeeklyPlan",
+        "eleValueList": [{
+          "code": "SubVisitPlan",
+          "data": [{
+            "subCode": "受试者编号1",
+            "visitDt": "访视日期1",
+            "visitCode": "访视名称1"
+          }, {
+            "subCode": "受试者编号2",
+            "visitDt": "访视日期2",
+            "visitCode": "访视名称2"
+          }],
+          "type": "table"
+        }, {
+          "code": "problems",
+          "data": [{
+            "result": "result1",
+            "problem": "problem1",
+            "solution": "solution1"
+          }, {
+            "result": "result2",
+            "problem": "problem2",
+            "solution": "solution2"
+          }],
+          "type": "table"
+        }],
+        "moduleCode": null
+      }, {
+        "eleCode": null,
+        "eleValueList": null,
+        "moduleCode": null
+      }]
+    }
+
+  </script>
+
+</body>
+
+</html>

@@ -6,6 +6,9 @@ import FormItem from '../views/components/formitem.vue'
 import FormPreview from '../views/components/formpreview.vue'
 import dynamicTable from '../views/components/dynamicTable.vue'
 import Anchor from '../views/components/anchor.vue'
+import funcTemp from '@/views/demo/funcTemp.vue';
+import Main from '@/views/main.vue';
+import part1 from '@/views/demo/part1.vue'
 
 Vue.use(Router)
 
@@ -41,6 +44,23 @@ export default new Router({
       path: '/anchor',
       name: 'anchor',
       component: Anchor
+    },
+    {
+      path: '/demo',
+      name: 'demo',
+      component:Main,
+      children:[
+        {
+          path:'funcTemp',
+          name:'funcTemp',
+          component:funcTemp
+        },
+        {
+          path:'part1',
+          name:'part1',
+          component:part1
+        }
+      ]
     },
   ]
 })

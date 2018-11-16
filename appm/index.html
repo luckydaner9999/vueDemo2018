@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <title>appm</title>
+  <link rel="stylesheet" href="https://at.alicdn.com/t/font_922228_ib5296dpy3e.css">
+</head>
+
+<body>
+  <div id="app"></div>
+  <!-- built files will be auto injected -->
+</body>
+
+</html>
+<script>
+  fnResize()
+
+  window.onresize = function () {
+
+    fnResize()
+
+  }
+
+  function fnResize() {
+
+    var deviceWidth = document.documentElement.clientWidth || window.innerWidth
+
+    if (deviceWidth >= 750) {
+
+      deviceWidth = 750
+
+    }
+
+    if (deviceWidth <= 320) {
+
+      deviceWidth = 320
+
+    }
+
+    document.documentElement.style.fontSize = (deviceWidth / 7.5) + 'px'
+
+  }
+
+</script>
