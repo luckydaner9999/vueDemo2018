@@ -3,8 +3,8 @@
   .selCity{
      position: absolute;
     left: 0.3rem;
-    top: 0.38rem;
-    font-size: 0.25rem;
+    top: 0.35rem;
+    font-size: 0.3rem;
   }
   .ipt{
     margin-left: 1.2rem;
@@ -12,28 +12,19 @@
     border-radius: 3px;
     padding: 8px 6px;
   }
+  .weui-cell:before{
+    border-top: none;
+  }
 }
 </style>
 
 <template>
-    <div>
+    <div class="content">
         <div class="searchpart">
-            <span @click.stop="select" class="selCity">苏州   <x-icon type="ios-arrow-down" size="12"></x-icon></span>
+            <span @click.stop="selectCity" class="selCity">苏州   <x-icon type="ios-arrow-down" size="15"></x-icon></span>
             <x-input  title="" placeholder="电影 / 电视剧 / 影人" class="ipt"></x-input> 
         </div>
-    <!-- <search
-      placeholder="电影 / 电视剧 / 影人"
-      @result-click="resultClick"
-      @on-change="getResult"
-      :results="results"
-      v-model="value"
-      position="absolute"
-      auto-scroll-to-top     
-      @on-focus="onFocus"
-      @on-cancel="onCancel"
-      @on-submit="onSubmit"
-      :auto-fixed="true"
-      ref="search"></search> -->
+
     </div>
 </template>
 <script>
@@ -70,7 +61,10 @@ export default {
     onCancel() {
       console.log("on cancel");
     },
-    select(){
+    selectCity(){
+      this.$router.push({
+        name:'city'
+      })
       console.log('clic')
     }
   }

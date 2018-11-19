@@ -21,6 +21,13 @@ export default {
 }
 body{
   background: #ffffff;
+  margin: 0;
+}
+p{
+  margin: 0;
+}
+.content{
+  padding: 8px;
 }
 
 </style>

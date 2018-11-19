@@ -1,9 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import tab from '@/components/tab.vue'
-import moveList from '@/views/moveList.vue'
+import moveList from '@/views/movelist/moveList.vue'
 import ranking from '@/views/ranking.vue'
 import my from '@/views/my.vue'
+import cities from '@/views/movelist/cities.vue'
 
 Vue.use(Router)
 
@@ -32,6 +33,11 @@ export default new Router({
           },
         ]
       },
+      {
+        path:'/city',
+        name:'city',
+        component:cities
+      }
       
     ]
   })
