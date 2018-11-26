@@ -9,6 +9,7 @@ import Anchor from '../views/components/anchor.vue'
 import funcTemp from '@/views/demo/funcTemp.vue';
 import Main from '@/views/main.vue';
 import part1 from '@/views/demo/part1.vue'
+import formvalid from '@/views/components/formvalid'
 
 Vue.use(Router)
 
@@ -61,6 +62,12 @@ export default new Router({
           component:part1
         }
       ]
+    },
+    {
+      path: '/formvalid',
+      name: 'formvalid',
+      component:formvalid,
+    
     },
   ]
 })
