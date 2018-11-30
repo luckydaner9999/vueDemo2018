@@ -8,8 +8,9 @@ import dynamicTable from '../views/components/dynamicTable.vue'
 import Anchor from '../views/components/anchor.vue'
 import funcTemp from '@/views/demo/funcTemp.vue';
 import Main from '@/views/main.vue';
-import part1 from '@/views/demo/part1.vue'
-import formvalid from '@/views/components/formvalid'
+import part1 from '@/views/demo/part1.vue';
+import formvalid from '@/views/components/formvalid';
+import imgBig from '@/views/imgBig.vue';
 
 Vue.use(Router)
 
@@ -67,6 +68,12 @@ export default new Router({
       path: '/formvalid',
       name: 'formvalid',
       component:formvalid,
+    
+    },
+    {
+      path: '/imgBig',
+      name: 'imgBig',
+      component:imgBig,
     
     },
   ]

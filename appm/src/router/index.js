@@ -15,6 +15,7 @@ export default new Router({
         path: '/',
         name: 'tab',
         component: tab,
+        redirect:'moveList',
         children:[
           {
             path: 'moveList',
